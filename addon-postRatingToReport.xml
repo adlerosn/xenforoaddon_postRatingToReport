@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="postRatingToReport" title="[kiror][Post Ratings] Auto-report on specific rating" version_string="0.0" version_id="0" url="https://github.com/adlerosn/" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="kiror_option_template_ratingLukeF_autoreport"><![CDATA[<xen:controlunit label="{$preparedOption.title}" hint="{$preparedOption.hint}">
+	<xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+	<xen:html>
+		<ul>
+			<li>
+<xen:textbox name="" value="Rating" placeholder="Rating" size="25" readonly="1" />
+<xen:textbox name="" value="Send report?" placeholder="Send report?" size="15" readonly="1" />
+<br />
+
+<xen:foreach loop="$ratings" value="$rating">
+
+<xen:textbox name="" value="{$rating.nm}" placeholder="Rating" size="25" readonly="1" />
+<input  type="checkbox"
+	name="{$fieldPrefix}[{$preparedOption.option_id}][{$rating.id}]"
+	{xen:if '{$rating.ck}', 'checked'}>
+Creates report
+</input>
+<br />
+
+</xen:foreach>
+			</li>
+		</ul>
+		
+		<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+		{xen:raw $editLink}
+	</xen:html>
+</xen:controlunit>]]></template>
+  </admin_templates>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="load_class_model" execute_order="10" callback_class="postRatingToReport_Extend" callback_method="callback" active="1" hint="Dark_PostRating_Model" description="Vinculates rating to report"/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups>
+    <option option_id="postRating_autoreport" edit_format="callback" data_type="array" can_backup="1" validation_class="postRatingToReport_adminOptionRateToReport" validation_method="validate">
+      <default_value>a:0:{}</default_value>
+      <edit_format_params>postRatingToReport_adminOptionRateToReport::renderView</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="postRating" display_order="1230"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="option_postRating_autoreport" version_id="0" version_string="0.0"><![CDATA[Autoreport on rate]]></phrase>
+    <phrase title="option_postRating_autoreport_explain" version_id="0" version_string="0.0"><![CDATA[When a selected rate is given to a forum post, it will automatically create a report on it.]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates/>
+  <public_template_modifications/>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
